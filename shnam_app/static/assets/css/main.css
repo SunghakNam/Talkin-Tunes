@@ -2466,7 +2466,7 @@
 
 			ul.actions li {
 				display: inline-block;
-				padding: 0 1em 0 0;
+/*				padding: 0 1em 0 0;*/
 				vertical-align: middle;
 			}
 
@@ -2620,7 +2620,7 @@
 		font-weight: 400;
 		height: 3em;
 		line-height: 3em;
-		padding: 0 2em;
+/*		padding: 0 2em;*/
 		text-align: center;
 		text-decoration: none;
 		white-space: nowrap;
@@ -3123,8 +3123,8 @@
 /* Footer */
 
 	#footer {
-		background: #f0f0f0;
-		padding: 4em 0 6em 0;
+		/*background: #f0f0f0;*/
+		/*padding: 4em 0 6em 0;*/
 		text-align: center;
 	}
 
@@ -3246,6 +3246,7 @@
 		/* Banner */
 
 			#banner {
+				height: 100%;
 				padding: 10em 0 18em 0;
 			}
 
@@ -3639,7 +3640,8 @@
 		/* Footer */
 
 			#footer {
-				padding: 4em 0;
+				padding-top: 1.5em;
+				/*padding: 4em 0;*/
 			}
 
 				#footer .copyright li {
@@ -3680,9 +3682,12 @@
 
 				ul.actions li {
 					display: block;
-					padding: 1em 0 0 0;
+					cursor: pointer;
+					/*padding: 1em 0 0 0;*/
 					text-align: center;
 					width: 100%;
+					margin-top: 10px;
+					margin-bottom:10px;
 				}
 
 					ul.actions li:first-child {
@@ -3755,7 +3760,7 @@
 		/* CTA */
 
 			#cta {
-				padding: 2.5em 1em 3em 1em;
+				padding: 1.5em 1em 3em 1em;
 			}
 
 	}
