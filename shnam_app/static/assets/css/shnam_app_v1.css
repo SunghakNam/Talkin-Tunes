@@ -1,0 +1,23 @@
+body{
+	height: 100%
+}
+.main-container{
+	height: 100%;
+}
+#banner_header{
+	padding: 1em;
+	z-index: 200;
+	position: fixed;
+	width: 100%;
+}
+#banner_footer{
+    width: 100%;
+    position: fixed;
+    z-index: 200;
+    bottom: 0;
+    height: 50px;
+    padding: 20px;
+    text-align: center;
+    background-color: #9a847b;
+    color: #fff;
+}

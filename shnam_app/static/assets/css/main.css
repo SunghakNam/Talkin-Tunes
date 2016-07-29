@@ -3027,7 +3027,7 @@
 
 /* Banner */
 
-	#banner {
+	.banner_section {
 		background-attachment: scroll,							fixed;
 		background-color: #666;
 		background-image: url("images/overlay.png"), url("../../images/banner.jpg");
@@ -3056,7 +3056,7 @@
 
 		#banner p {
 			font-size: 1.25em;
-			margin-bottom: 1.75em;
+			margin-bottom: 0.5em;
 		}
 
 		#banner input[type="submit"],

@@ -6,18 +6,27 @@
 -->
 <html>
 	<head>
+		<!-- meta tags -->
 		<title>shnam</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- stylesheets -->
+		<link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/css/bootstrap-theme.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/css/shnam_app_v1.css' %}" />
 		<!-- scripts -->
 		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 		<script src="{% static 'assets/js/jquery.scrollgress.min.js' %}"></script>
 		<script src="{% static 'assets/js/skel.min.js' %}"></script>
 		<script src="{% static 'assets/js/util.js' %}"></script>
 		<script src="{% static 'assets/js/main.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 	</head>
 	<body class="landing">
+		{% include 'common/header.html' %}
 		{% block content %}
 		{% endblock %}
 	</body>
