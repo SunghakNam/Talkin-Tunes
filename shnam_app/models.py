@@ -7,8 +7,7 @@ from django.utils import timezone
 
 class User(models.Model):
 	userIdx = models.AutoField(primary_key=True, db_index=True)
-	userId = models.CharField(unique=True, max_length=50)
-	email = models.CharField(max_length=50, blank=True, null=True)
+	email = models.CharField(unique=True, max_length=50, blank=True, null=True)
 	password = models.CharField(max_length=100)
 	device = models.CharField(max_length=50, blank=True, null=True)
 	loginToken = models.TextField(default="", blank=True)

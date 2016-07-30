@@ -1,1 +1,40 @@
-<div class="banner_section" id="banner_header">Beta</div>
+
+
+<div class="banner_section" id="banner_header">
+	<span id="app_title">Beta<span>
+	<i class="material-icons" id="search_music" style="vertical-align:bottom;float:right;">&#xE8B6;</i>
+	<div class="music_search_wrapper">
+		<input class="music_search_field" id="music_search_field"placeholder="tap the here again to search!" style="width:100%;border:1px solid;border-radius:20px;margin-top:20px;display:none;" />
+	</div>
+	<!-- <iframe id="play" src="https://p.scdn.co/mp3-preview/e54fc2eb0f305561bcccc98aa216cd46ced40a22" width:'100px' height:'100px'>111111</iframe> -->
+	<iframe src="https://embed.spotify.com/?uri=spotify:track:10QVjibjK2bhisfn0pPYMB" width="350" height="80" frameborder="1" allowtransparency="true"></iframe>
+	<!-- <iframe src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf&theme=white" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
+</div>
+
+<script>
+	$('#search_music').on('click', function(){
+		$("#music_search_field").show();
+
+	});
+	// $('body').on('keyup', '#music_search_field', function(){
+	// 	spotify_search(this.value);
+	// });
+	$('.music_search_wrapper').on('click',function(){
+		var searchinput = $('#music_search_field').val();
+		if (searchinput){
+			spotify_search(searchinput);
+		}
+	});
+	function spotify_search(input){
+		//var url = "https://api.spotify.com/v1/search?query=동방신기&offset=0&limit=20&type=track&market=US";
+		var url = "https://api.spotify.com/v1/search?query=" + input + "&offset=0&limit=50&type=track&market=US"
+		$.ajax({
+			url : url,
+			type : "GET",
+			success : function(data){
+				console.log(data);
+			}
+
+		});
+	}
+</script>
