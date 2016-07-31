@@ -1,0 +1,8 @@
+<div class="friends-list-container">
+	{% for user in users %}
+		<div class="friends-list">
+			<span>{{user.email}}</span>
+			<span style="float:right;">Add friend <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>
+		</div>
+	{% endfor %}
+</div>

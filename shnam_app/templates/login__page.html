@@ -54,7 +54,10 @@
 			type: "POST",
 			data: login_data,
 			success : function(data){
-
+				if(data['result'] = "True"){
+					window.location.href = '/';
+				}
+					
 			},
 			error : function(data){
 
