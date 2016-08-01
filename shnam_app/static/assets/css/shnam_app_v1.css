@@ -24,6 +24,10 @@ body{
     background-color: #9a847b;
     color: #fff;
 }
+
+table.music-table.wrapper{
+    margin:0;
+}
 tr.music-list{
     text-align: center;
 }

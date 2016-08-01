@@ -1,4 +1,4 @@
-<div id="banner_header">
+<div class="banner_section" id="banner_header">
 	<div class="banner-header-wrapper">
 		<i class="material-icons" id="find-friends" style="vertical-align:bottom;float:left;">&#xE7FE;</i>
 		<span id="app_title">Beta</span>
@@ -8,10 +8,10 @@
 		<div class="music_search_wrapper">
 			<input class="music_search_field" id="music_search_field" placeholder="tap to search!" style="width:100%;border:1px solid;border-radius:20px;margin-top:20px;" />
 		</div>
-		<table class="music-table wrapper">
+		<!-- <table class="music-table wrapper">
 			<tbody class="music-tbody">
 			</tbody>
-		</table>
+		</table> -->
 	</div>
 	<!-- <iframe id="play" src="https://p.scdn.co/mp3-preview/e54fc2eb0f305561bcccc98aa216cd46ced40a22" width:'100px' height:'100px'>111111</iframe> -->
 	<!-- <iframe src="https://embed.spotify.com/?uri=spotify:track:10QVjibjK2bhisfn0pPYMB" width="350" height="80" frameborder="1" allowtransparency="true"></iframe> -->
@@ -20,8 +20,8 @@
 
 <script>
 	$('#search_music').on('click', function(){
-		$(".music-search-container").show();
-
+		//$(".music-search-container").show();
+		$("#modal-music-search").modal('show');
 	});
 	$('#find-friends').on('click',function(){
 		$('#modal-find-friends').modal('show');
@@ -29,49 +29,10 @@
 	// $('body').on('keyup', '#music_search_field', function(){
 	// 	spotify_search(this.value);
 	// });
-	$('.music_search_wrapper').on('click',function(){
-		var searchinput = $('#music_search_field').val();
-		if (searchinput){
-			spotify_search(searchinput);
-		}
-	});
-	function spotify_search(input){
-		//var url = "https://api.spotify.com/v1/search?query=동방신기&offset=0&limit=20&type=track&market=US";
-		var url = "https://api.spotify.com/v1/search?query=" + input + "&offset=0&limit=5&type=track&market=US"
-		$.ajax({
-			url : url,
-			type : "GET",
-			success : function(data){
-				// console.log(data);
-				// console.log(data['tracks'])
-				// console.log(data['tracks']['items'])
-
-				//loop through the track items
-				for(var i in data['tracks']['items']){
-					
-					console.log(data['tracks']['items'][i]);
-					var music_uri = data['tracks']['items'][i]['uri'];
-					var music_player = '<iframe src="https://embed.spotify.com/?uri='+ music_uri + '" width="350" height="80" allowtransparency="true"></iframe>';
-					var music_list = '<tr class="music-list" style="color:#fff;"><td class="music-player">' + music_player + '<div><i class="material-icons">&#xE03B;</i><i class="material-icons">&#xE163;</i></div></td></tr>'
-					// var music_list = '<tr class="music-list"><td class="music-player">' + music_player + '</td></tr><tr class="table-row options"><td class="table-division"><i class="material-icons">&#xE03B;</i><i class="material-icons">&#xE163;</i></td></tr>';
-					$('.music-table .music-tbody').append(music_list);
-
-				}
-			}
-
-		});
-	}
-	function find_friends(){
-		var input = $('#friends-email-id').val();
-		$.ajax({
-			url: "/search_friends",
-			type: "POST",
-			data: {"friends_info" : input},
-			success: function(view){
-				console.log(view)
-				$('.friends-list-wrapper').html(view);
-			}
-		});
-
-	}
+	// $('.music_search_wrapper').on('click',function(){
+	// 	var searchinput = $('#music_search_field').val();
+	// 	if (searchinput){
+	// 		spotify_search(searchinput);
+	// 	}
+	// });
 </script>

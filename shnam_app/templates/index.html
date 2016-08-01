@@ -8,9 +8,79 @@
 	<!--<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>-->
 
 	<script>
-	function check_loggedin(){
+	$('#music-search-icon').on('click',function(){
+		console.log($(this));
+		var searchinput = $('#music-search-input').val();
+		if (searchinput){
+			spotify_search(searchinput);
+		}
+	});
+	function get_friends(uri){
+		// console.log(type);
+		$.ajax({
+			url: '/get_friends',
+			type: 'POST',
+			data: {'uri': uri, csrfmiddlewaretoken: '{{ csrf_token }}' },
+			success: function(view){
+				$('#modal-get-friends').modal('show');
+				$('#modal-get-friends').find('.friends-list-wrapper').html(view);
+			},
+			error: function(){
+
+			}
+		});
+	}
+	function find_friends(){
+		var input = $('#friends-email-id').val();	
+		var modal = $('#modal-find-friends');
+			
+		$.ajax({
+			url: "/search_friends",
+			type: "POST",
+			data: {"friends_info" : input, csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success: function(view){
+				console.log(view)
+				modal.find('.friends-list-wrapper').html(view);
+			}
+		});
 
 	}
+	function spotify_search(input){
+		//var url = "https://api.spotify.com/v1/search?query=동방신기&offset=0&limit=20&type=track&market=US";
+		var url = "https://api.spotify.com/v1/search?query=" + input + "&offset=0&limit=5&type=track&market=US"
+		$.ajax({
+			url : url,
+			type : "GET",
+			success : function(data){
+				// console.log(data);
+				// console.log(data['tracks'])
+				// console.log(data['tracks']['items'])
+
+				//loop through the track items
+				for(var i in data['tracks']['items']){
+					
+					console.log(data['tracks']['items'][i]);
+					var music_uri = data['tracks']['items'][i]['uri'];
+					var music_player = '<iframe src="https://embed.spotify.com/?uri='+ music_uri + '" width="350" height="350" allowtransparency="true"></iframe>';
+					var music_list = '<tr class="music-list" style="color:#000000;"><td class="music-player">' + music_player + '<div><div><i class="material-icons">&#xE03B;</i></div><div class="send-to-friend" data-uri=' + music_uri +' onclick="get_friends(\''+music_uri+'\')"><i class="material-icons">&#xE163;</i></div></div></td></tr>'
+					// var music_list = '<tr class="music-list"><td class="music-player">' + music_player + '</td></tr><tr class="table-row options"><td class="table-division"><i class="material-icons">&#xE03B;</i><i class="material-icons">&#xE163;</i></td></tr>';
+					$('.music-table .music-tbody').append(music_list);
+
+				}
+			}
+
+		});
+	}
+
+	function login_check(){
+
+	}
+	// function get_friends(uri){
+	// 	console.log(uri)
+	// 	//console.log($(this))
+	// 	//var music_uri = $(this).data('uri')
+	// 	//alert(music_uri)
+	// }
 	</script>
 	{% include 'common/footer.html' %}
 {% endblock %}
