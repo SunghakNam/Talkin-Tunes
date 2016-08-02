@@ -27,15 +27,37 @@ class User(models.Model):
 	def check_password(self, password):
 		return pbkdf2_check(password, self.password)
 
-class Friend(models.Model):
-	friendIdx = models.AutoField(primary_key=True)
-	sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
-	receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
+class Follow(models.Model):
+	followIdx = models.AutoField(primary_key=True)
+	follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower")
+	followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followee")
 	createdTime = models.DateTimeField(auto_now_add=True)
 	disable = models.BooleanField(default=False)
 
 	class Meta:
-		unique_together = ('sender', 'receiver')
+		unique_together = ('follower', 'followee')
 
 	def __publish__(self):
 		self.save()
+
+class Playlist(models.Model):
+	playlistIdx = models.AutoField(primary_key=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
+	uri = models.CharField(max_length=100, null=True, blank=True)
+	createdTime = models.DateTimeField(auto_now_add=True)
+	disable = models.BooleanField(default=False)
+
+	def __publish__(self):
+		self.save()
+
+class MusicMsg(models.Model):
+	msgIdx = models.AutoField(primary_key=True)
+	followObj = models.ForeignKey(Follow, on_delete=models.CASCADE, related_name="follow_obj")
+	# sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
+	# receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")
+	uri = models.CharField(max_length=100, null=True, blank=True)
+	createdTime = models.DateTimeField(auto_now_add=True)
+
+	def __publish__(self):
+		self.save()
+

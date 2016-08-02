@@ -1,0 +1,35 @@
+<div class="mypage-container">
+	<div class="user-profile">
+		<div class="user-profile email" data-userid="{{user.id}}" onclick="logout()">
+			{{user.email}}
+		</div>
+		<div class="user-profile follow-info">
+			<span class="following-num">
+				{{following_num}} people
+			</span>
+			<span class="followed-num">
+				{{followed_num}} people
+			</span>
+		</div>
+	</div>
+	<div class="section-division" style="background-color:#e8e1e1;">
+		Playlist
+	</div>
+	<div class="user-playlist">
+	</div>
+</div>
+
+<script>
+	function logout(){
+		$.ajax({
+			url: '/logout',
+			type: 'POST',
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(view){
+				login_page();
+				// $('.main-container').html(view);
+			}, error:function(){
+			}
+		});
+	}
+</script>

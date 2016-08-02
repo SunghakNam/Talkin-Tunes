@@ -11,8 +11,8 @@ def main(request):
 	return render(request, 'index.html', {})
 
 # login
-def login__page(request):
-	return render(request, 'login__page.html', {})
+def login_page(request):
+	return render(request, 'login_page.html', {})
 
 @ensure_csrf_cookie
 def login(request):
@@ -40,8 +40,28 @@ def login(request):
 
 @ensure_csrf_cookie
 def login_check(request):
-	print request.session
-	return 0 
+	if 'email' in request.session:
+		login_status = {"result": True}
+	else:
+		login_status = {"result": False}
+	return HttpResponse(json.dumps(login_status), content_type="application/json")
+
+def logout(request):
+	try:
+		# import pdb; pdb.set_trace()
+		request.session.delete()
+		return HttpResponse(json.dumps('success'), content_type="application/json")
+	except:
+		return HttpResponse(json.dumps('error'), content_type="application/json")
+
+#page nav
+def feed_page(request):
+	return render(request, 'feed_page.html')
+def my_page(request):
+	user = this_user(request)
+	following = Follow.objects.filter(follower=user, disable=0)
+	followed = Follow.objects.filter(followee=user, disable=0)
+	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count()})
 
 def search_friends(request):
 	users = User.objects.filter(email__contains=request.POST.get('friends_info')).exclude(email=request.session['email'])
@@ -49,20 +69,50 @@ def search_friends(request):
 
 def get_friends(request):
 	user = this_user(request)
-	friends = Friend.objects.filter(sender=user, disable=0)
-	print friends
-	return render(request, 'friends_list.html', {'friends': friends, 'uri': request.POST.get('uri')})	
+	follows = Follow.objects.filter(follower=user, disable=0)
+	# print friends
+	return render(request, 'friends_list.html', {'follows': follows, 'uri': request.POST.get('uri')})	
 
 def add_friend(request):
 	try:
 		user = this_user(request)
-		friend_id = request.POST.get('friendIdx')
-		friend = User.objects.get(userIdx=friend_id)
-		friend_obj = Friend(sender=user, receiver=friend)
-		friend_obj.__publish__()
+		followee_id = request.POST.get('friendIdx')
+		followee = User.objects.get(userIdx=followee_id)
+		follow_obj = Follow(follower=user, followee=followee)
+		follow_obj.__publish__()
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
 		return HttpResponse(json.dumps('error'), content_type="application/json")
+
+def send_music(request):
+	try:
+		uri = request.POST.get('uri')
+		receiverId = request.POST.get('receiver')
+		receiver = User.objects.get(userIdx=receiverId)
+		sender = this_user(request)
+
+		follow_obj = Follow.objects.get(follower=sender, followee=receiver)
+
+		#create a message
+		# musicmsg = MusicMsg(sender=sender,receiver=receiver,uri=uri)
+		musicmsg = MusicMsg(followObj=follow_obj, uri=uri)
+		musicmsg.__publish__()
+		return HttpResponse(json.dumps('success'), content_type="application/json")
+	except:
+		return HttpResponse(json.dumps('error'), content_type="application/json")		
+
+def add_playlist(request):
+	try:
+		user = this_user(request)
+		uri = request.POST.get('uri')
+
+		#add to a playlist
+		playlist = Playlist(user=user, uri=uri)
+		playlist.__publish__()
+		return HttpResponse(json.dumps('success'), content_type="application/json")
+	except:
+		return HttpResponse(json.dumps('error'), content_type="application/json")		
+
 
 def this_user(request):
 	user_email = request.session['email']

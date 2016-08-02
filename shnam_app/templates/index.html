@@ -2,25 +2,38 @@
 {% load staticfiles %}
 {% block content %}
 	<div class="main-container" id="page-wrapper">
-		{% include 'main__page.html' %}
+		{% include 'feed_page.html' %}
 	</div>
 
 	<!--<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>-->
 
 	<script>
+	login_check();
 	$('#music-search-icon').on('click',function(){
-		console.log($(this));
 		var searchinput = $('#music-search-input').val();
 		if (searchinput){
 			spotify_search(searchinput);
 		}
 	});
+	function add_playlist(uri){
+		$.ajax({
+			url: '/add_playlist',
+			type: 'POST',
+			data: {'uri': uri, csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(){
+
+			},error:function(){
+
+			}
+		})
+
+	}
 	function get_friends(uri){
 		// console.log(type);
 		$.ajax({
 			url: '/get_friends',
 			type: 'POST',
-			data: {'uri': uri, csrfmiddlewaretoken: '{{ csrf_token }}' },
+			data: {'uri': uri, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success: function(view){
 				$('#modal-get-friends').modal('show');
 				$('#modal-get-friends').find('.friends-list-wrapper').html(view);
@@ -62,7 +75,7 @@
 					console.log(data['tracks']['items'][i]);
 					var music_uri = data['tracks']['items'][i]['uri'];
 					var music_player = '<iframe src="https://embed.spotify.com/?uri='+ music_uri + '" width="350" height="350" allowtransparency="true"></iframe>';
-					var music_list = '<tr class="music-list" style="color:#000000;"><td class="music-player">' + music_player + '<div><div><i class="material-icons">&#xE03B;</i></div><div class="send-to-friend" data-uri=' + music_uri +' onclick="get_friends(\''+music_uri+'\')"><i class="material-icons">&#xE163;</i></div></div></td></tr>'
+					var music_list = '<tr class="music-list" style="color:#000000;"><td class="music-player">' + music_player + '<div><div class="add_playlist" onclick="add_playlist(\''+music_uri+'\')"><i class="material-icons">&#xE03B;</i></div><div class="send-to-friend" data-uri=' + music_uri +' onclick="get_friends(\''+music_uri+'\')"><i class="material-icons">&#xE163;</i></div></div></td></tr>'
 					// var music_list = '<tr class="music-list"><td class="music-player">' + music_player + '</td></tr><tr class="table-row options"><td class="table-division"><i class="material-icons">&#xE03B;</i><i class="material-icons">&#xE163;</i></td></tr>';
 					$('.music-table .music-tbody').append(music_list);
 
@@ -73,14 +86,39 @@
 	}
 
 	function login_check(){
+		$.ajax({
+			url: '/login_check',
+			type: 'POST',
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(data){
+				// alert(data.result)
+				//console.log()
+				if (data.result == false){
+					login_page();
+					// window.location.href = "/login__page";
+				}
 
+			},error:function(){
+
+			}
+
+		});
 	}
-	// function get_friends(uri){
-	// 	console.log(uri)
-	// 	//console.log($(this))
-	// 	//var music_uri = $(this).data('uri')
-	// 	//alert(music_uri)
-	// }
+	function login_page(){
+		$.ajax({
+			url: '/login_page',
+			type: 'POST',
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(view){
+				$('#banner_header').hide();
+				$('#banner_footer').hide();
+				$('.main-container').css('margin-top', 0);
+				$('.main-container').html(view);
+			}, error:function(view){
+			
+			}
+		});
+	}
 	</script>
 	{% include 'common/footer.html' %}
 {% endblock %}

@@ -1,6 +1,33 @@
 <footer class="footer" id="banner_footer">
 	<div class="footer-nav-wrapepr">
-		<div class="col-xs-6">feed</div>
-		<div class="col-xs-6">mypage</div>
+		<div class="footer col-xs-6" id="feed_page">feed</div>
+		<div class="footer col-xs-6" id="my_page">mypage</div>
 	</div>
 </footer>
+
+<script>
+	$('#feed_page').on('click', function(){
+		$.ajax({
+			url: '/feed_page',
+			type: 'POST',
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(view){
+				$('.main-container').html(view);
+			}, error:function(){
+
+			}
+		});
+	});
+	$('#my_page').on('click', function(){
+		$.ajax({
+			url: '/my_page',
+			type: 'POST',
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(view){
+				$('.main-container').html(view);
+			}, error:function(){
+
+			}
+		});
+	});
+</script>

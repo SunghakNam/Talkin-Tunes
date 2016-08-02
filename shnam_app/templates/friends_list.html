@@ -1,27 +1,26 @@
 <div class="friends-list-container">
-	{% for friend in friends %}
-		<div class="friends-list">
-			<span>{{friend.receiver.email}}</span>
+	{% for fol in follows %}
+		<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}">
+			<span>{{fol.followee.email}}</span>
 			<span class="music-send-icon" style="float:right;"><i class="material-icons" style="vertical-align:bottom;">&#xE163;</i></span>
 		</div>
 	{% endfor %}
 </div>
 
 <script>
-	$('.add-friend').on('click', function(){
-		var friendIdx = $(this).data('useridx');
-		alert(friendIdx)
+	$('.friends-list').on('click',function(){
+		var uri = $(this).data('uri');
+		var receiver = $(this).data('userid');
 		$.ajax({
-			url: '/add_friend',
-			type: 'POST',
-			data: {'friendIdx': friendIdx, csrfmiddlewaretoken: '{{ csrf_token }}' },
-			success: function(){
+			url: "/send_music",
+			type: "POST",
+			data: {"uri": uri, "receiver": receiver, csrfmiddlewaretoken: '{{ csrf_token }}'},
+			sucess:function(){
 
-			},error:function(){
+			},error: function(){
 
 			}
 
-		})
-
+		});
 	});
 </script>

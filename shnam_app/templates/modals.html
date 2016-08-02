@@ -3,9 +3,9 @@
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog replymodal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header header-dark ">
-					<input id="friends-email-id" placeholder="Enter email or id" style="background-color:black;width:85%;"/>
-					<i class="material-icons" id="search_friends" style="vertical-align:bottom;float:right;" onclick="find_friends()">&#xE8B6;</i>
+				<div class="modal-header header-dark" style="border-bottom:0;">
+					<input class="search-area" id="friends-email-id" placeholder="Enter email or id"/>
+					<i class="material-icons music-search-icon" id="search_friends"onclick="find_friends()">&#xE8B6;</i>
 				</div>
 				<div class="friends-list-wrapper">
 				</div>
@@ -14,11 +14,11 @@
 	</div>
 	<div class="modal fade replymodal" id="modal-music-search" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog replymodal-dialog" role="document" style="margin:0;">
-			<div class="modal-content" style="background-color:#fff">
-				<div class="modal-header header-dark ">
-					<input id="music-search-input" placeholder="Search music here" style="background-color:black;width:85%;"/>
-					<i class="material-icons" id="music-search-icon" style="vertical-align:bottom;float:right;">&#xE8B6;</i>
+		<div class="modal-dialog replymodal-dialog" role="document">
+			<div class="modal-content" style="background-color:#bd998b;border-radius:20px;">
+				<div class="modal-header header-dark" style="border-bottom:0;">
+					<input class="search-area" id="music-search-input" placeholder="Search music here" style=""/>
+					<i class="material-icons music-search-icon" id="music-search-icon">&#xE8B6;</i>
 				</div>
 				<table class="music-table wrapper">
 					<tbody class="music-tbody">
