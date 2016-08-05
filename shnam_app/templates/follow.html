@@ -1,0 +1,15 @@
+<div class="follow-list-wrap">
+	{% if type == "following" %}
+		{% for f in follow %}
+			<div>
+				{{f.followee.email}}
+			</div>
+		{% endfor %}
+	{% elif type == "follower" %}
+		{% for f in follow %}
+			<div>
+				{{f.follower.email}}
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>

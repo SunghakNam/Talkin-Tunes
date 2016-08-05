@@ -61,7 +61,8 @@ def my_page(request):
 	user = this_user(request)
 	following = Follow.objects.filter(follower=user, disable=0)
 	followed = Follow.objects.filter(followee=user, disable=0)
-	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count()})
+	playlist = Playlist.objects.filter(user=user)
+	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist})
 
 def search_friends(request):
 	users = User.objects.filter(email__contains=request.POST.get('friends_info')).exclude(email=request.session['email'])
@@ -113,12 +114,21 @@ def add_playlist(request):
 	except:
 		return HttpResponse(json.dumps('error'), content_type="application/json")		
 
+def get_following(request):
+	# import pdb; pdb.set_trace()
+	user = this_user(request)
+	following = Follow.objects.filter(follower=user)
+	return render(request, 'follow.html', {'user': user, 'type':'following', 'follow': following})
+
+def get_follower(request):
+	user = this_user(request)
+	follower = Follow.objects.filter(followee=user)
+	return render(request, 'follow.html', {'user': user, 'type':'follower', 'follow': follower})
 
 def this_user(request):
 	user_email = request.session['email']
 	user = User.objects.get(email=user_email)
 	return user
-
 
 
 

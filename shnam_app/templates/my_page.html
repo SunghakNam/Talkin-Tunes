@@ -4,22 +4,38 @@
 			{{user.email}}
 		</div>
 		<div class="user-profile follow-info">
-			<span class="following-num">
-				{{following_num}} people
-			</span>
-			<span class="followed-num">
-				{{followed_num}} people
-			</span>
+			<div>
+				<div class="col-xs-3 following-num"  data-type="following" data-toggle="modal" data-target="#modal-get-follow">
+					{{following_num}}<br>
+					followings
+				</div>
+				<div class="col-xs-3 followed-num" data-type="follower" data-toggle="modal" data-target="#modal-get-follow">
+					{{followed_num}}<br>
+					followers
+				</div>
+			</div>
+			<!-- <div style="clear:both"></div> -->
+			<!-- <div>
+				<div class="col-xs-3">following</div>
+				<div class="col-xs-3">followers</div>
+			</div> -->
 		</div>
 	</div>
+	<div style="clear:both;"></div>
 	<div class="section-division" style="background-color:#e8e1e1;">
 		Playlist
 	</div>
 	<div class="user-playlist">
+		{% for p in playlist %}
+		<div class="p-user-playlist">
+			<iframe src="https://embed.spotify.com/?uri={{p.uri}}" height="80"allowtransparency="true"></iframe>
+		</div>
+		{% endfor %}
 	</div>
 </div>
 
 <script>
+
 	function logout(){
 		$.ajax({
 			url: '/logout',

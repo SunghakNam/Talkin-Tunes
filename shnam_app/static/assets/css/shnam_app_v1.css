@@ -1,9 +1,13 @@
+html {-webkit-overflow-scrolling: touch;}
 body{
 	height: 100%
 }
 .main-container{
-	height: 100%;
-    margin-top:50px;
+	height: 90%;
+    margin-top:55px;
+}
+.banner_section{
+    overflow:scroll;
 }
 #banner_header{
 	padding: 1em;
@@ -41,21 +45,68 @@ tr.music-list{
 
 .music-search-icon{
      vertical-align:bottom;
-     float:right;
      color:#fff;"
 }
 
 .replymodal-dialog{
     margin:0;
 }
+#modal-music-search{
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
 .modal-content{
     background-color:#bd998b;
-    border-radius:20px;
+    border-radius: 0;
+}
+.modal-content > .modal-header{
+    border-bottom:0;
+}
+.modal-icons-wrapper{
+    display:inline-block;
+}
+.modal-icons-wrapper > .modal-dismiss-icon{
+    color: #fff;
+    vertical-align: middle;
 }
 .search-area{
     background-color:transparent;
-    width:85%;
+    width:80%;
     border:0;
     border-bottom:1px solid #fff;
     color:#fff;
+}
+.following-num, .followed-num{
+    text-align: center;
+}
+.add_playlist, .send-to-friend{
+    height:100%;
+}
+.add_playlist{
+    border-right: 1px solid #fff;
+    padding-top: 2px;
+}
+.send-to-friend{
+    border-left: 1px solid #fff;
+    padding-top: 3px;
+}
+
+.send-to-friend > .material-icons{
+    font-size: 20px;
+}
+.music-function-wrapper{
+    height: 30px;
+    border: 2px solid #fff;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px
+}
+.friends-list-wrapper, .following-list-wrapper{
+    color:#fff;
+    padding: 0 1em 0 1em;
+    margin: 10px 0 10px 0;
+}
+.footer.col-xs-6 > .material-icons{
+    font-size:35px;
 }

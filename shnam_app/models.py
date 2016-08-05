@@ -43,7 +43,7 @@ class Follow(models.Model):
 class Playlist(models.Model):
 	playlistIdx = models.AutoField(primary_key=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
-	uri = models.CharField(max_length=100, null=True, blank=True)
+	uri = models.CharField(max_length=100, null=True, blank=True, unique=True)
 	createdTime = models.DateTimeField(auto_now_add=True)
 	disable = models.BooleanField(default=False)
 
