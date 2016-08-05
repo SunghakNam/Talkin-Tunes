@@ -1,6 +1,6 @@
 <div class="mypage-container">
 	<div class="user-profile">
-		<div class="user-profile email" data-userid="{{user.id}}" onclick="logout()">
+		<div class="user-profile email" data-userid="{{user.id}}" {% if logout_enable %} onclick="logout()" {% endif %}>
 			{{user.email}}
 		</div>
 		<div class="user-profile follow-info">

@@ -1,13 +1,13 @@
 <div class="follow-list-wrap">
 	{% if type == "following" %}
 		{% for f in follow %}
-			<div>
+			<div class="followee-list" data-userid="{{f.followee.email}}" data-toggle="modal" data-target="#modal-user-info">
 				{{f.followee.email}}
 			</div>
 		{% endfor %}
 	{% elif type == "follower" %}
 		{% for f in follow %}
-			<div>
+			<div class="follower-list" data-userid="{{f.follower.email}}" data-toggle="modal" data-target="#modal-user-info">
 				{{f.follower.email}}
 			</div>
 		{% endfor %}

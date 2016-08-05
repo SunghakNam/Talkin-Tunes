@@ -58,11 +58,17 @@ def logout(request):
 def feed_page(request):
 	return render(request, 'feed_page.html')
 def my_page(request):
-	user = this_user(request)
+	print type(request.POST.get('userinfo'))
+	if request.POST.get('userinfo') == 'true':
+		user = User.objects.get(email=request.POST.get('user'))
+		logout_enable = False
+	else:
+		user = this_user(request)
+		logout_enable = True
 	following = Follow.objects.filter(follower=user, disable=0)
 	followed = Follow.objects.filter(followee=user, disable=0)
 	playlist = Playlist.objects.filter(user=user)
-	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist})
+	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist, 'logout_enable':logout_enable})
 
 def search_friends(request):
 	users = User.objects.filter(email__contains=request.POST.get('friends_info')).exclude(email=request.session['email'])

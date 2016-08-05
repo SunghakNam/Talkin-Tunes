@@ -18,22 +18,39 @@
 
 		}
 	});
+	//modals
+	$("#modal-user-info").on('show.bs.modal', function(event){
+		var modal = $(this);
+		var user = $(event.relatedTarget);
+		modal.find('.modal-title').text(user.data('userid'));
+		// print user
+		$.ajax({
+			url: '/my_page',
+			type: 'POST',
+			data: {'user': user.data('userid'), 'userinfo': 'true',csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success:function(view){
+				$('.modal-content').html(view);
+			}, error:function(){
+
+			}
+		});
+	});
 	$("#modal-get-follow").on('show.bs.modal', function(event){
 		var type = $(event.relatedTarget).data('type');
 		var modal = $(this);
-		// alert(type)
 		if(type=="following"){
 			url = "get_following/";
+			title = "Your followings";
 		}else if (type=="follower"){
 			url = "get_follower/";
+			title = "Your followers";
 		}
+		modal.find('.modal-title').text(title);
 		$.ajax({
 			url : url,
 			type: "POST",
 			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success : function(view){
-				console.log(modal.find('.following-list-wrapper'))
-				console.log(view)
 				modal.find('.following-list-wrapper').html(view)
 			}, error: function(){
 			}

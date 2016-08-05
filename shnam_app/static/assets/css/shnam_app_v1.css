@@ -55,6 +55,9 @@ tr.music-list{
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
+.modal-title{
+    padding:3px 0 0 1em;
+}
 .modal-content{
     background-color:#bd998b;
     border-radius: 0;
@@ -109,4 +112,8 @@ tr.music-list{
 }
 .footer.col-xs-6 > .material-icons{
     font-size:35px;
+}
+
+input[type="search"]{
+    font-size:16px;
 }

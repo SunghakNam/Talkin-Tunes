@@ -22,7 +22,7 @@
 		$.ajax({
 			url: '/my_page',
 			type: 'POST',
-			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			data: {'userinfo': 'false', csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
 			}, error:function(){
