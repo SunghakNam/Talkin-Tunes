@@ -118,7 +118,22 @@ def add_playlist(request):
 		playlist.__publish__()
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
-		return HttpResponse(json.dumps('error'), content_type="application/json")		
+		return HttpResponse(json.dumps('error'), content_type="application/json")
+
+
+def remove_playlist(request):
+	try:
+		import pdb; pdb.set_trace()
+		user = this_user(request)
+		pid = request.POST.get('pid')
+
+		#get playlist
+		playlist = Playlist.objects.get(playlistIdx=pid, user=user)
+		playlist.__remove__()
+		return HttpResponse(json.dumps('success'), content_type="application/json")
+	except:
+		return HttpResponse(json.dumps('error'), content_type="application/json")	
+
 
 def get_following(request):
 	# import pdb; pdb.set_trace()

@@ -2465,7 +2465,7 @@
 		}
 
 			ul.actions li {
-				display: inline-block;
+				display: block;
 /*				padding: 0 1em 0 0;*/
 				vertical-align: middle;
 			}

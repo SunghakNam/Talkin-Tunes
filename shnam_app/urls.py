@@ -26,6 +26,7 @@ urlpatterns = [
 
 	#add to playlist
 	url(r'^add_playlist', views.add_playlist, name='add_playlist'),
+	url(r'^remove_playlist', views.remove_playlist, name='remove_playlist'),
 
 	#following info
 	url(r'^get_following', views.get_following, name='get_following'),

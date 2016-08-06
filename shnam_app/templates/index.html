@@ -1,14 +1,21 @@
 {% extends 'common/head.html' %}
 {% load staticfiles %}
 {% block content %}
-	<div class="main-container" id="page-wrapper">
-		{% include 'feed_page.html' %}
+	<div style="height:100%;
+    overflow-y: hidden;
+    margin-top: 0px;
+    padding-bottom: 70px;">
+		<div class="mainback main-container" id="page-wrapper">
+			{% include 'feed_page.html' %}
 		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf&view=coverart" width="250" height="330" frameborder="0" allowtransparency="true"></iframe> -->
+		</div>
 	</div>
 
 	<!--<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>-->
 
 	<script>
+	// alert($(window).width());
+	var PAGE;
 	login_check();
 	$('#music-search-icon').on('click',function(){
 		var searchinput = $('#music-search-input').val();
@@ -22,14 +29,14 @@
 	$("#modal-user-info").on('show.bs.modal', function(event){
 		var modal = $(this);
 		var user = $(event.relatedTarget);
-		modal.find('.modal-title').text(user.data('userid'));
+		modal.find('.modal-header').text(user.data('userid'));
 		// print user
 		$.ajax({
 			url: '/my_page',
 			type: 'POST',
 			data: {'user': user.data('userid'), 'userinfo': 'true',csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
-				$('.modal-content').html(view);
+				modal.find('.modal-user-content').html(view);
 			}, error:function(){
 
 			}
@@ -57,6 +64,61 @@
 		})
 
 	});
+	// var SCROLLED=false;
+	// setInterval(function(){
+	// 	if (PAGE != "login"){
+	// 		check_scroll();	
+	// 	}
+	// }, 250);
+	function check_scroll(){
+		// console.log(SCROLLED)
+		// console.log($(window).scrollTop() > 0 && !SCROLLED)
+		if ($(window).scrollTop() > 0){
+			// console.log(1)
+			$('footer').hide();
+			// $('footer').animate({bottom: -50}, "fast", function(){
+			// 	SCROLLED=true;
+			// });
+			// $('footer').animate({bottom:-50}, "fast", function(){
+			// 	SCROLLED=true;
+			// });
+		}else if($(window).scrollTop() == 0){
+			$('footer').show();
+			// console.log(22222)
+			// $('footer').animate({bottom: 0}, "fast", function(){
+			// 	SCROLLED=false;
+			// });
+		}
+
+	}
+	// var didScroll;
+	// // on scroll, let the interval function know the user has scrolled
+	// $(window).scroll(function(event){
+ //  		didScroll = true;
+	// });
+	// // run hasScrolled() and reset didScroll status
+	// setInterval(function() {
+ //    	hasScrolled();
+ //    	didScroll = false;
+	// }, 250);
+	// function hasScrolled() {
+	// 	console.log(didScroll)
+ //  		// do stuff here...
+ //  		if(didScroll){
+ //  			$('footer').hide();
+ //  		}
+ //  		else{
+ //  			console.log(1)
+ //  			$('footer').show();
+ //  		}
+
+	// }
+	// // $(window).scroll(function(event){
+	// 	$('footer').hide();
+	// });
+	// $(window).on('scrollstop',function(){
+	// 	$('footer').show();
+	// });
 	function add_playlist(uri){
 		$.ajax({
 			url: '/add_playlist',
@@ -136,8 +198,12 @@
 				//console.log()
 				if (data.result == false){
 					login_page();
+					PAGE="login";
 					// window.location.href = "/login__page";
+				}else{
+					PAGE = "main";	
 				}
+				
 
 			},error:function(){
 

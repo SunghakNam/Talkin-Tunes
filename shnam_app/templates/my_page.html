@@ -1,17 +1,17 @@
 <div class="mypage-container">
-	<div class="user-profile">
-		<div class="user-profile email" data-userid="{{user.id}}" {% if logout_enable %} onclick="logout()" {% endif %}>
+	<div class="user-profile" style="padding: 0 1em 0 1em;">
+		<div class="user-profile email font-color font-weight" data-userid="{{user.id}}" {% if logout_enable %} onclick="logout()" {% endif %}>
 			{{user.email}}
 		</div>
 		<div class="user-profile follow-info">
 			<div>
 				<div class="col-xs-3 following-num"  data-type="following" data-toggle="modal" data-target="#modal-get-follow">
-					{{following_num}}<br>
-					followings
+					<span class="font-color font-weight">{{following_num}}</span><br>
+					<span style="font-weight:normal">followings</span>
 				</div>
 				<div class="col-xs-3 followed-num" data-type="follower" data-toggle="modal" data-target="#modal-get-follow">
-					{{followed_num}}<br>
-					followers
+					<span class="font-color font-weight">{{followed_num}}</span><br>
+					<span style="font-weight:normal">followers</span>
 				</div>
 			</div>
 			<!-- <div style="clear:both"></div> -->
@@ -22,20 +22,35 @@
 		</div>
 	</div>
 	<div style="clear:both;"></div>
-	<div class="section-division" style="background-color:#e8e1e1;">
+	<div class="section-division font-weight font-color" style="background-color:#e8e1e1;padding-left:15px;">
 		Playlist
 	</div>
-	<div class="user-playlist">
+	<div class="user-playlist" style="height:100%;">
 		{% for p in playlist %}
-		<div class="p-user-playlist">
-			<iframe src="https://embed.spotify.com/?uri={{p.uri}}" height="80"allowtransparency="true"></iframe>
+		<div class="p-user-playlist" style="display:inline-block;height: 80px; background-color: #282828; width: 100%;margin-bottom:5px;margin-top:5px;">
+			<iframe src="https://embed.spotify.com/?uri={{p.uri}}" height="80" allowtransparency="false" frameborder="0"></iframe>
+			<!-- <span style="display:inline-block;"> -->
+				<i class="material-icons mypage-remove-icon" data-pid="{{p.playlistIdx}}">&#xE14C;</i>
+			<!-- </span> -->
 		</div>
 		{% endfor %}
 	</div>
 </div>
 
 <script>
+	$('.mypage-remove-icon').on('click', function(){
+		var pid = $(this).data('pid');
+		$.ajax({
+			url: '/remove_playlist',
+			type: 'POST',
+			data: {'pid': pid, csrfmiddlewaretoken: '{{ csrf_token }}'},
+			success: function(){
 
+			}, error: function(){
+
+			}
+		});
+	});
 	function logout(){
 		$.ajax({
 			url: '/logout',
