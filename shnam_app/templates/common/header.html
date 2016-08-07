@@ -1,40 +1,19 @@
-<div class="mainback header-container" style="">
+<header class="mainback header-container" style="z-index:1000;display:none;">
 	<div id="banner_header">
 		<div class="banner-header-wrapper">
 			<i class="material-icons" id="find-friends" style="vertical-align:bottom;float:left;">&#xE7FE;</i>
 			<span id="app_title">Beta</span>
 			<i class="material-icons music-search-icon" id="search_music" style="float:right;">&#xE8B6;</i>
 		</div>
-		<div class="music-search-container" style="display:none;">
-			<div class="music_search_wrapper">
-				<input class="music_search_field" id="music_search_field" placeholder="tap to search!" style="width:100%;border:1px solid;border-radius:20px;margin-top:20px;" />
-			</div>
-			<!-- <table class="music-table wrapper">
-				<tbody class="music-tbody">
-				</tbody>
-			</table> -->
-		</div>
-		<!-- <iframe id="play" src="https://p.scdn.co/mp3-preview/e54fc2eb0f305561bcccc98aa216cd46ced40a22" width:'100px' height:'100px'>111111</iframe> -->
-		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:track:10QVjibjK2bhisfn0pPYMB" width="350" height="80" frameborder="1" allowtransparency="true"></iframe> -->
-		<!-- <iframe src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf&theme=white" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 	</div>
-</div>
+</header>
 
 <script>
 	$('#search_music').on('click', function(){
-		//$(".music-search-container").show();
 		$("#modal-music-search").modal('show');
 	});
 	$('#find-friends').on('click',function(){
 		$('#modal-find-friends').modal('show');
 	});
-	// $('body').on('keyup', '#music_search_field', function(){
-	// 	spotify_search(this.value);
-	// });
-	// $('.music_search_wrapper').on('click',function(){
-	// 	var searchinput = $('#music_search_field').val();
-	// 	if (searchinput){
-	// 		spotify_search(searchinput);
-	// 	}
-	// });
+
 </script>

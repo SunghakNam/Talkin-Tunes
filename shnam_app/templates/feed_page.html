@@ -1,4 +1,32 @@
+{% load data_type %}
+<style>
+	.feed-title{
+		padding-left:1em;
+	}
+	hr{
+		margin: 7px;
+	}
+</style>
 <div class="feed-list-container">
-	<i class="material-icons">&#xE3E0;</i>
-	<div>You do not have new feed yet!</div>
+	{% if feed_list %}
+		{% for f in feed_list %}
+			{% if f|data_type == 'fol' %}
+				<div class="feed-wrap">
+					<div class="feed-title font-color">{{f.follower.email}} now follows you</div>
+				</div>
+				<hr>
+			{% elif f|data_type == 'msg' %}
+				<div class="feed-wrap">		
+					<div class="feed-title font-color">{{f.followObj.follower.email}} sent you a music</div>
+					<div class="feed-contents"><iframe src="https://embed.spotify.com/?uri={{f.uri}}" width="{{width}}"height="80" allowtransparency="false" frameborder="0"></iframe></div>
+				</div>
+				<hr>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<div class="no-feed-wrap" style="height:300px; margin-top:100px; text-align:center;">
+			<i class="material-icons">&#xE3E0;</i>
+			<div class="test">You do not have new feed yet!</div>
+		</div>
+	{% endif %}
 </div>

@@ -36,7 +36,7 @@ body{
 @media (min-width: 768px){
     .modal-dialog{
         width:500px !important;
-        margin:0 auto;
+        margin:30px auto;
     }
 }
 .modal-dialog{
@@ -62,8 +62,8 @@ body{
     font-weight:bold;
 }
 .main-container{
-	height:auto;
-    margin-top:63px;
+	height:100%;
+    margin-top:53px;
     overflow: auto;
 }
 .banner_section{
@@ -71,7 +71,7 @@ body{
 }
 #banner_header{
 	padding: 1em;
-	z-index: 200;
+	/*z-index: 200;*/
 	/*position: fixed;*/
 	/*width:500px;*/
     text-align: center;
@@ -85,6 +85,7 @@ body{
     bottom: 0;
     height: 50px;
     text-align: center;
+    display:none;
     /*background-color: #bd998b;*/
     color: #fff;
 }
@@ -153,14 +154,14 @@ tr.music-list{
 .following-num, .followed-num{
     text-align: center;
 }
-.following-num{
+/*.following-num{
     border-right: 1px solid #999;
     border-left: 2px solid #999;
 }
 .followed-num{
     border-left: 1px solid #999;
     border-right: 2px solid #999;
-}
+}*/
 .add_playlist, .send-to-friend{
     height:100%;
 }
@@ -196,9 +197,11 @@ tr.music-list{
     margin: 10px 0 10px 0;
 }
 .material-icons.mypage-remove-icon{
-    font-size:16px;
+    font-size:20px;
+    position:absolute;
+    z-index: 1000;
     vertical-align: top;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
     height: 80px;
     /*position:relative;*/
     /*bottom:20px;*/

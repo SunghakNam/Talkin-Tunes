@@ -7,10 +7,11 @@
 
 <script>
 	$('#feed_page').on('click', function(){
+		var width = $('body').width()
 		$.ajax({
 			url: '/feed_page',
 			type: 'POST',
-			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+			data: {'width': width, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
 			}, error:function(){
@@ -19,10 +20,11 @@
 		});
 	});
 	$('#my_page').on('click', function(){
+		var width = $('body').width() - 20;
 		$.ajax({
 			url: '/my_page',
 			type: 'POST',
-			data: {'userinfo': 'false', csrfmiddlewaretoken: '{{ csrf_token }}'},
+			data: {'userinfo': 'false', 'width': width, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
 			}, error:function(){

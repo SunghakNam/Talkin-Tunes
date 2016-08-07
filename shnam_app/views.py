@@ -48,7 +48,6 @@ def login_check(request):
 
 def logout(request):
 	try:
-		# import pdb; pdb.set_trace()
 		request.session.delete()
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
@@ -56,9 +55,19 @@ def logout(request):
 
 #page nav
 def feed_page(request):
-	return render(request, 'feed_page.html')
+	user = this_user(request)
+	feed_list = None
+	#music sent
+	musicmsg = MusicMsg.objects.filter(followObj__followee=user)
+
+	#follow request
+	fol_request = Follow.objects.filter(followee=user)
+
+	from itertools import chain
+	from operator import attrgetter
+	feed_list = sorted(chain(musicmsg, fol_request), key=attrgetter('createdTime'))
+	return render(request, 'feed_page.html', {'feed_list': feed_list, 'width': request.POST.get('width')})
 def my_page(request):
-	print type(request.POST.get('userinfo'))
 	if request.POST.get('userinfo') == 'true':
 		user = User.objects.get(email=request.POST.get('user'))
 		logout_enable = False
@@ -68,7 +77,7 @@ def my_page(request):
 	following = Follow.objects.filter(follower=user, disable=0)
 	followed = Follow.objects.filter(followee=user, disable=0)
 	playlist = Playlist.objects.filter(user=user)
-	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist, 'logout_enable':logout_enable})
+	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist, 'width':request.POST.get('width'), 'logout_enable':logout_enable})
 
 def search_friends(request):
 	users = User.objects.filter(email__contains=request.POST.get('friends_info')).exclude(email=request.session['email'])
@@ -123,7 +132,6 @@ def add_playlist(request):
 
 def remove_playlist(request):
 	try:
-		import pdb; pdb.set_trace()
 		user = this_user(request)
 		pid = request.POST.get('pid')
 
