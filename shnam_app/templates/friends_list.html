@@ -1,7 +1,7 @@
 <div class="friends-list-container" style="color:#000000;">
 	{% if follows %}
 		{% for fol in follows %}
-			<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}">
+			<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}" style="font-size:25px">
 				<span>{{fol.followee.email}}</span>
 				<span class="music-send-icon" style="float:right;"><i class="material-icons" style="vertical-align:bottom;">&#xE163;</i></span>
 			</div>

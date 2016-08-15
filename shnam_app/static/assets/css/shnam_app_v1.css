@@ -211,6 +211,9 @@ tr.music-list{
 input[type="search"]{
     font-size:16px;
 }
+.add-friend{
+    float:right;
+}
 .remove-friend{
     display: block;
     float: right;

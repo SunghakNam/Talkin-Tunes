@@ -51,12 +51,15 @@
 	});
 	$('.mypage-remove-icon').on('click', function(){
 		var pid = $(this).data('pid');
+		var this_obj = $(this)
 		$.ajax({
 			url: '/remove_playlist',
 			type: 'POST',
 			data: {'pid': pid, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success: function(){
-
+				$(this_obj).parent().remove();
+				// $(this_obj).remove();
+				native_alert("", "Music deleted successfully");
 			}, error: function(xhr, errmsg, err){
 				error_report("remove_playlist", xhr.status, xhr.responseText, errmsg)
 			}

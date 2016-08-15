@@ -49,8 +49,6 @@ class Playlist(models.Model):
 
 	def __publish__(self):
 		self.save()
-	def __remove__(self):
-		self.delete()
 
 class MusicMsg(models.Model):
 	msgIdx = models.AutoField(primary_key=True)

@@ -6,7 +6,7 @@
 				{% if user.userIdx in following %}
 					<span class="remove-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="">Following <i class="material-icons" style="vertical-align:bottom;">&#xE876;</i></span>
 				{% else %}
-					<span class="add-friend" id="add-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="float:right;">Follow <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>
+					<span class="add-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="float:right;">Follow <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>
 				{% endif %}
 			</div>
 		{% endfor %}
@@ -19,8 +19,28 @@
 </div>
 
 <script>
-	$('.add-friend').on('click', function(){
+	$('.remove-friend').on('click', function(){
+		alert(2)
 		var friendIdx = $(this).data('useridx');
+		var friendemail = $(this).data('useremail');
+		var this_obj = $(this);
+		
+		$.ajax({
+			url: '/remove_friend',
+			type: 'POST',
+			data: {'friendIdx': friendIdx, csrfmiddlewaretoken: '{{ csrf_token }}' },
+			success: function(){
+				$(this_obj).replaceWith('<span class="add-friend" data-useremail="'+friendemail+'" data-useridx='+friendIdx+'>Follow <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>');
+			},error:function(xhr, errmsg, err){
+				error_report("remove_friend", xhr.status, xhr.responseText, errmsg)
+			}
+
+		});
+	});
+	$('.add-friend').on('click', function(){
+		alert(1)
+		var friendIdx = $(this).data('useridx');
+		var friendemail = $(this).data('useremail');
 		var this_obj = $(this);
 		
 		$.ajax({
@@ -28,7 +48,7 @@
 			type: 'POST',
 			data: {'friendIdx': friendIdx, csrfmiddlewaretoken: '{{ csrf_token }}' },
 			success: function(){
-				$(this_obj).replaceWith('<span class="remove-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="">Following <i class="material-icons" style="vertical-align:bottom;">&#xE876;</i></span>');
+				$(this_obj).replaceWith('<span class="remove-friend" data-useremail="'+friendemail+'" data-useridx='+friendIdx+'>Following <i class="material-icons" style="vertical-align:bottom;">&#xE876;</i></span>');
 			},error:function(xhr, errmsg, err){
 				error_report("add_friend", xhr.status, xhr.responseText, errmsg)
 			}

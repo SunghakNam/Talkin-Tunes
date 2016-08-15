@@ -20,6 +20,7 @@ urlpatterns = [
 	url(r'^search_friends', views.search_friends, name='search_friends'),
 	url(r'^get_friends', views.get_friends, name='get_friends'),
 	url(r'^add_friend', views.add_friend, name='add_friend'),
+	url(r'^remove_friend', views.remove_friend, name='remove_friend'),
 
 	#send music
 	url(r'^send_music', views.send_music, name='send_music'),

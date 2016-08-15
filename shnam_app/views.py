@@ -77,7 +77,7 @@ def my_page(request):
 		logout_enable = True
 	following = Follow.objects.filter(follower=user, disable=0)
 	followed = Follow.objects.filter(followee=user, disable=0)
-	playlist = Playlist.objects.filter(user=user)
+	playlist = Playlist.objects.filter(user=user, disable=0)
 	return render(request, 'my_page.html', {'user': user, 'following_num':following.count(), 'followed_num': followed.count(),'playlist':playlist, 'width':request.POST.get('width'), 'logout_enable':logout_enable})
 
 def search_friends(request):
@@ -97,11 +97,25 @@ def add_friend(request):
 		user = this_user(request)
 		followee_id = request.POST.get('friendIdx')
 		followee = User.objects.get(userIdx=followee_id)
-		follow_obj = Follow(follower=user, followee=followee)
-		follow_obj.__publish__()
+		if Follow.objects.filter(follower=user, followee=followee).exists():
+			Follow.objects.filter(follower=user, followee=followee).update(disable=0)
+		else:
+			follow_obj = Follow(follower=user, followee=followee)
+			follow_obj.__publish__()
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
 		return HttpResponse(json.dumps('error'), content_type="application/json")
+
+def remove_friend(request):
+	try:
+		user = this_user(request)
+		followee_id = request.POST.get('friendIdx')
+		followee = User.objects.get(userIdx=followee_id)
+		follow_obj = Follow.objects.filter(follower=user, followee=followee).update(disable=1)
+		return HttpResponse(json.dumps('success'), content_type="application/json")
+	except:
+		return HttpResponse(json.dumps('error'), content_type="application/json")
+
 
 def send_music(request):
 	try:
@@ -125,9 +139,12 @@ def add_playlist(request):
 		user = this_user(request)
 		uri = request.POST.get('uri')
 
-		#add to a playlist
-		playlist = Playlist(user=user, uri=uri)
-		playlist.__publish__()
+		if Playlist.objects.filter(user=user, uri=uri, disable=1).exists():
+			Playlist.objects.filter(user=user, uri=uri, disable=1).update(disable=0)
+		else:
+			#add to a playlist
+			playlist = Playlist(user=user, uri=uri)
+			playlist.__publish__()
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
 		return HttpResponse(json.dumps('error'), content_type="application/json")
@@ -139,8 +156,7 @@ def remove_playlist(request):
 		pid = request.POST.get('pid')
 
 		#get playlist
-		playlist = Playlist.objects.get(playlistIdx=pid, user=user)
-		playlist.__remove__()
+		playlist = Playlist.objects.filter(playlistIdx=pid, user=user).update(disable=1)
 		return HttpResponse(json.dumps('success'), content_type="application/json")
 	except:
 		return HttpResponse(json.dumps('error'), content_type="application/json")	
