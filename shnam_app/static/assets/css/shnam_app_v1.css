@@ -211,7 +211,13 @@ tr.music-list{
 input[type="search"]{
     font-size:16px;
 }
-
+.remove-friend{
+    display: block;
+    float: right;
+    border: 1px solid;
+    width: 100px;
+    padding-left: 5px;
+}
 /*feedpage*/
 .feed-list-container{
     margin-top:25px;
@@ -224,6 +230,13 @@ input[type="search"]{
 .feed-title .feed-user-email{
     font-weight: 500;
     text-decoration: underline;
+}
+.swiper-lazy-preloader.swiper-feed{
+    display:block;
+    z-index:2000;
+    top:auto;
+    margin:auto;
+    left:50%
 }
 /*mypage*/
 .mypage-container .email{

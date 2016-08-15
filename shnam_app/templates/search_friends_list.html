@@ -1,27 +1,39 @@
 <div class="friends-list-container">
-	{% for user in users %}
-		<div class="friends-list">
-			<span>{{user.email}}</span>
-			<span class="add-friend" id="add-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="float:right;">Follow <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>
+	{% if users %}
+		{% for user in users %}
+			<div class="friends-list">
+				<span>{{user.email}}</span>
+				{% if user.userIdx in following %}
+					<span class="remove-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="">Following <i class="material-icons" style="vertical-align:bottom;">&#xE876;</i></span>
+				{% else %}
+					<span class="add-friend" id="add-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="float:right;">Follow <i class="material-icons" style="vertical-align:bottom;">&#xE146;</i></span>
+				{% endif %}
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="no-follow-wrap" style="color:#fff;">
+			<i class="material-icons">&#xE7FC;</i>
+			<p style="font-size:20px;">No matching User!</p>
 		</div>
-	{% endfor %}
+	{% endif %}
 </div>
 
 <script>
 	$('.add-friend').on('click', function(){
 		var friendIdx = $(this).data('useridx');
-		alert(friendIdx)
+		var this_obj = $(this);
+		
 		$.ajax({
 			url: '/add_friend',
 			type: 'POST',
 			data: {'friendIdx': friendIdx, csrfmiddlewaretoken: '{{ csrf_token }}' },
 			success: function(){
-
+				$(this_obj).replaceWith('<span class="remove-friend" data-useremail="{{user.email}}" data-useridx={{user.userIdx}} style="">Following <i class="material-icons" style="vertical-align:bottom;">&#xE876;</i></span>');
 			},error:function(xhr, errmsg, err){
 				error_report("add_friend", xhr.status, xhr.responseText, errmsg)
 			}
 
-		})
+		});
 
 	});
 </script>

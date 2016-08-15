@@ -1,4 +1,4 @@
-<div class="friends-list-container">
+<div class="friends-list-container" style="color:#000000;">
 	{% if follows %}
 		{% for fol in follows %}
 			<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}">
@@ -23,7 +23,7 @@
 			type: "POST",
 			data: {"uri": uri, "receiver": receiver, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			sucess:function(){
-
+				native_alert("", "music sent successfully!");
 			},error: function(xhr, errmsg, err){
 				error_report("send_music", xhr.status, xhr.responseText, errmsg)
 			}

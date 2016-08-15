@@ -3,7 +3,7 @@
 		<div class="user-profile email font-color font-weight" data-userid="{{user.id}}" {% if logout_enable %} onclick="logout()" {% endif %}>
 			{{user.email}}
 		</div>
-		<div class="user-profile follow-info" style="height:50px;">
+		<div class="user-profile follow-info" style="">
 			<div>
 				<div class="col-xs-3 following-num"  data-type="following" data-toggle="modal" data-target="#modal-get-follow">
 					<span class="font-color font-weight">{{following_num}}</span><br>
@@ -29,7 +29,8 @@
 		{% if playlist %}
 			{% for p in playlist %}
 			<div class="p-user-playlist" style="display:inline-block;height: 80px; background-color: #282828; width: 100%;margin-bottom:5px;margin-top:5px;">
-				<iframe src="https://embed.spotify.com/?uri={{p.uri}}" width="{{width}}"height="80" allowtransparency="false" frameborder="0"></iframe>
+				<div class="swiper-lazy-preloader swiper-feed"></div>
+				<iframe class="spotify-frame" src="https://embed.spotify.com/?uri={{p.uri}}" width="{{width}}"height="80" allowtransparency="false" frameborder="0"></iframe>
 				<!-- <span style="display:inline-block;"> -->
 					<i class="material-icons mypage-remove-icon" data-pid="{{p.playlistIdx}}">&#xE14C;</i>
 				<!-- </span> -->
@@ -45,6 +46,9 @@
 </div>
 
 <script>
+	$('.spotify-frame').load(function(){
+		$(this).prev().hide();
+	});
 	$('.mypage-remove-icon').on('click', function(){
 		var pid = $(this).data('pid');
 		$.ajax({

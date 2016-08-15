@@ -82,7 +82,10 @@ def my_page(request):
 
 def search_friends(request):
 	users = User.objects.filter(email__contains=request.POST.get('friends_info')).exclude(email=request.session['email'])
-	return render(request, 'search_friends_list.html', {'users': users})
+	following = Follow.objects.filter(follower=this_user(request), disable=0).values_list('followee_id')
+	if following:
+		following = following[0]
+	return render(request, 'search_friends_list.html', {'users': users, 'following': following})
 
 def get_friends(request):
 	user = this_user(request)
