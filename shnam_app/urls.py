@@ -31,4 +31,7 @@ urlpatterns = [
 	#following info
 	url(r'^get_following', views.get_following, name='get_following'),
 	url(r'^get_follower', views.get_follower, name='get_follower'),	
+
+	#error report
+	url(r'^error_report', views.error_report, name='error_report'),		
 ]

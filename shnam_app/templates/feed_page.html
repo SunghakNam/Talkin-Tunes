@@ -1,8 +1,5 @@
 {% load data_type %}
 <style>
-	.feed-title{
-		padding-left:1em;
-	}
 	hr{
 		margin: 7px;
 	}
@@ -12,12 +9,13 @@
 		{% for f in feed_list %}
 			{% if f|data_type == 'fol' %}
 				<div class="feed-wrap">
-					<div class="feed-title font-color">{{f.follower.email}} now follows you</div>
+					<div class="feed-title font-color"><span class="feed-user-email" data-userid="{{f.follower.email}}" data-toggle="modal" data-target="#modal-user-info">{{f.follower.email}}</span> now follows you</div>
 				</div>
 				<hr>
 			{% elif f|data_type == 'msg' %}
 				<div class="feed-wrap">		
-					<div class="feed-title font-color">{{f.followObj.follower.email}} sent you a music</div>
+					<div class="feed-title font-color">
+						<span class="feed-user-email" data-userid="{{f.followObj.follower.email}}" data-toggle="modal" data-target="#modal-user-info">{{f.followObj.follower.email}}</span> sent you a music</div>
 					<div class="feed-contents"><iframe src="https://embed.spotify.com/?uri={{f.uri}}" width="{{width}}"height="80" allowtransparency="false" frameborder="0"></iframe></div>
 				</div>
 				<hr>

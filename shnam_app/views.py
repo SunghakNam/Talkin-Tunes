@@ -67,6 +67,7 @@ def feed_page(request):
 	from operator import attrgetter
 	feed_list = sorted(chain(musicmsg, fol_request), key=attrgetter('createdTime'))
 	return render(request, 'feed_page.html', {'feed_list': feed_list, 'width': request.POST.get('width')})
+
 def my_page(request):
 	if request.POST.get('userinfo') == 'true':
 		user = User.objects.get(email=request.POST.get('user'))
@@ -86,7 +87,6 @@ def search_friends(request):
 def get_friends(request):
 	user = this_user(request)
 	follows = Follow.objects.filter(follower=user, disable=0)
-	# print friends
 	return render(request, 'friends_list.html', {'follows': follows, 'uri': request.POST.get('uri')})	
 
 def add_friend(request):
@@ -153,6 +153,22 @@ def get_follower(request):
 	user = this_user(request)
 	follower = Follow.objects.filter(followee=user)
 	return render(request, 'follow.html', {'user': user, 'type':'follower', 'follow': follower})
+
+def error_report(request):
+	user = "none"
+	if request.session.has_key('email'):
+		user = this_user(request)
+	callFunc = request.POST.get('callFunc')
+	status = request.POST.get('status')
+	if request.POST.get('responseText'):
+		responseText = request.POST.get('responseText')
+	else: 
+		responseText=u'Unknown';
+	errmsg =request.POST.get('errmsg')
+        
+	ErrorReport(user=user.email,callFunc=callFunc,status=status,responseText=responseText,errmsg=errmsg).__publish__()
+        
+	return HttpResponse(json.dumps(True), content_type="application/json")
 
 def this_user(request):
 	user_email = request.session['email']

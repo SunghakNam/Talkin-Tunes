@@ -53,8 +53,8 @@
 			data: {'pid': pid, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success: function(){
 
-			}, error: function(){
-
+			}, error: function(xhr, errmsg, err){
+				error_report("remove_playlist", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	});
@@ -66,8 +66,9 @@
 			success:function(view){
 				login_page();
 				// $('.main-container').html(view);
-			}, error:function(){
-			}
+			}, error:function(xhr, errmsg, err){
+				error_report("logout", xhr.status, xhr.responseText, errmsg)
+			}	
 		});
 	}
 </script>

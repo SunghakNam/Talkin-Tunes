@@ -17,8 +17,8 @@
 			data: {'friendIdx': friendIdx, csrfmiddlewaretoken: '{{ csrf_token }}' },
 			success: function(){
 
-			},error:function(){
-
+			},error:function(xhr, errmsg, err){
+				error_report("add_friend", xhr.status, xhr.responseText, errmsg)
 			}
 
 		})

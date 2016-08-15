@@ -2,16 +2,16 @@
 <section class="banner_section" id="banner">
 	<!-- the main division -->
 	<div class="main__division">
-		<h2>Alpha</h2>
-		<p>Another fine responsive site template freebie by HTML5 UP.</p>
+		<h2>MuChat</h2>
+		<p>Finest way to share play list and communicate with friends</p>
 		<ul class="actions">
-			<li id="signup" class="button">Sign Up</li>
+			<li id="signup" class="button">Sign Up / Sign In</li>
 			<!-- <li id="learn-more" class="button">Learn More</li> -->
 		</ul>
 		<section class="signup__division" id="cta" style="display:none;">
+			<!-- <span class="glyphicon glyphicon glyphicon-remove"></span> -->
 			<h2>Sign up for beta access</h2>
-			<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-
+			<p>Play with MuChat beta version</p>
 			<form method="POST" id="login-form">
 				{% csrf_token %}
 				<div class="row uniform 50%">
@@ -58,8 +58,8 @@
 				}
 					
 			},
-			error : function(data){
-
+			error : function(xhr, errmsg, err){
+				error_report("login", xhr.status, xhr.responseText, errmsg)
 			}
 		})
 	});

@@ -43,7 +43,7 @@ class Follow(models.Model):
 class Playlist(models.Model):
 	playlistIdx = models.AutoField(primary_key=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
-	uri = models.CharField(max_length=100, null=True, blank=True, unique=True)
+	uri = models.CharField(max_length=100, null=True, blank=True)
 	createdTime = models.DateTimeField(auto_now_add=True)
 	disable = models.BooleanField(default=False)
 
@@ -62,4 +62,16 @@ class MusicMsg(models.Model):
 
 	def __publish__(self):
 		self.save()
+
+class ErrorReport(models.Model):
+    ErrorId = models.AutoField(primary_key=True)
+    user = models.TextField(default="")
+    callFunc = models.TextField(default="", blank=True)
+    status = models.TextField(default="", blank=True)
+    responseText = models.TextField(default="", blank=True)
+    errmsg = models.TextField(default="", blank=True)
+    createdTime = models.DateTimeField(auto_now=True)
+    
+    def __publish__(self):
+        self.save()
 

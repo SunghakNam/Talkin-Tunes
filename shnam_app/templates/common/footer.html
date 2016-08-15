@@ -14,8 +14,8 @@
 			data: {'width': width, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
-			}, error:function(){
-
+			}, error:function(xhr, errmsg, err){
+				error_report("feed_page", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	});
@@ -27,8 +27,8 @@
 			data: {'userinfo': 'false', 'width': width, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
-			}, error:function(){
-
+			}, error:function(xhr, errmsg, err){
+				error_report('mypage', xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	});

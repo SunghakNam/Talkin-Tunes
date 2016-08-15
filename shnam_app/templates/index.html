@@ -25,16 +25,17 @@
 	$("#modal-user-info").on('show.bs.modal', function(event){
 		var modal = $(this);
 		var user = $(event.relatedTarget);
-		modal.find('.modal-header').text(user.data('userid'));
-		// print user
+		// modal.find('.modal-header').text(user.data('userid'));
+
 		$.ajax({
 			url: '/my_page',
 			type: 'POST',
 			data: {'user': user.data('userid'), 'userinfo': 'true',csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
-				modal.find('.modal-user-content').html(view);
-			}, error:function(){
 
+				modal.find('.modal-user-content').html(view);
+			}, error:function(xhr, errmsg, err){
+				error_report("modal_mypage", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	});
@@ -54,8 +55,10 @@
 			type: "POST",
 			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success : function(view){
+				console.log(view)
 				modal.find('.following-list-wrapper').html(view)
-			}, error: function(){
+			}, error: function(xhr, errmsg, err){
+				error_report(url, xhr.status, xhr.responseText, errmsg)
 			}
 		})
 
@@ -67,52 +70,14 @@
 			}
 		}, 250);
 		function check_scroll(){
-			// console.log(SCROLLED)
-			// console.log($(window).scrollTop() > 0 && !SCROLLED)
-			// console.log($('.main-container').scrollTop());
 			if ($('.main-container').scrollTop() > 0){
 				// console.log(1)
 				$('footer').hide();
 			}else if($('.main-container').scrollTop() == 0){
 				$('footer').show();
-				// console.log(22222)
-				// $('footer').animate({bottom: 0}, "fast", function(){
-				// 	SCROLLED=false;
-				// });
 		}
 
 	}
-
-	
-	// var didScroll;
-	// // on scroll, let the interval function know the user has scrolled
-	// $(window).scroll(function(event){
- //  		didScroll = true;
-	// });
-	// // run hasScrolled() and reset didScroll status
-	// setInterval(function() {
- //    	hasScrolled();
- //    	didScroll = false;
-	// }, 250);
-	// function hasScrolled() {
-	// 	console.log(didScroll)
- //  		// do stuff here...
- //  		if(didScroll){
- //  			$('footer').hide();
- //  		}
- //  		else{
- //  			console.log(1)
- //  			$('footer').show();
- //  		}
-
-	// }
-	// // $(window).scroll(function(event){
-	// 	$('footer').hide();
-	// });
-	// $(window).on('scrollstop',function(){
-	// 	$('footer').show();
-	// });
-
 	function feed_page(){
 		var width = $('body').width();
 		$.ajax({
@@ -121,8 +86,8 @@
 			data: {'width':width, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(view){
 				$('.main-container').html(view);
-			}, error:function(){
-
+			}, error:function(xhr, errmsg, err){
+				error_report("feed_page", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	}
@@ -133,9 +98,9 @@
 			type: 'POST',
 			data: {'uri': uri, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(){
-				// $('#ajax-loader').hide();
-			},error:function(){
-
+				native_alert('', 'successfully added to your play list!');
+			},error:function(xhr, errmsg, err){
+				error_report("add_playlist", xhr.status, xhr.responseText, errmsg)
 			}
 		})
 
@@ -149,8 +114,8 @@
 				$('#modal-get-friends').modal('show');
 				$('#modal-get-friends').find('.friends-list-wrapper').html(view);
 			},
-			error: function(){
-
+			error: function(xhr, errmsg, err){
+				error_report("get_friends", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 	}
@@ -164,22 +129,19 @@
 			data: {"friends_info" : input, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success: function(view){
 				modal.find('.friends-list-wrapper').html(view);
+			}, error:function(xhr, errmsg, err){
+				error_report("search_friends", xhr.status, xhr.responseText, errmsg)
 			}
 		});
 
 	}
 	function spotify_search(input){
 		$('#modal-ajax-loader').show();
-		//var url = "https://api.spotify.com/v1/search?query=동방신기&offset=0&limit=20&type=track&market=US";
 		var url = "https://api.spotify.com/v1/search?query=" + input + "&offset=0&type=track&market=US"
 		$.ajax({
 			url : url,
 			type : "GET",
 			success : function(data){
-				
-				// console.log(data);
-				// console.log(data['tracks'])
-				// console.log(data['tracks']['items'])
 				var width = $('body').width() - 20;
 				// var height = width * 0.267;
 				var func_div_width = width + 4;
@@ -220,8 +182,8 @@
 				}
 				
 
-			},error:function(){
-
+			},error:function(xhr, errmsg, err){
+				error_report("login_check", xhr.status, xhr.responseText, errmsg)
 			}
 
 		});
@@ -238,10 +200,26 @@
 				$('.main-container').css({'margin-top': 0});
 				$('.container-wrapper').css('padding-bottom', 0);
 				$('.main-container').html(view);
-			}, error:function(view){
-			
+			}, error:function(xhr, errmsg, err){
+				error_report("login_page", xhr.status, xhr.responseText, errmsg)
 			}
 		});
+	}
+	function error_report(callFunc, status, responseText, errmsg){
+		$.ajax({
+    		url : 'error_report/', // the endpoint,
+    		type : "POST", // http method
+    		data : {callFunc:callFunc, status:status, responseText:responseText, errmsg:errmsg, csrfmiddlewaretoken: '{{ csrf_token }}'},
+    		success : function(data) {
+    	
+    		}
+		});
+	}
+	function native_alert(title, desc){
+		try{
+			console.log(desc);
+			location.href = 'iosfunction://MuChat/'+desc;
+		}catch(e){console.log(e);}
 	}
 	</script>
 	{% include 'common/footer.html' %}

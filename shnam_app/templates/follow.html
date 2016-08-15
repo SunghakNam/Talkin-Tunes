@@ -1,15 +1,29 @@
 <div class="follow-list-wrap">
 	{% if type == "following" %}
-		{% for f in follow %}
-			<div class="followee-list" data-userid="{{f.followee.email}}" data-toggle="modal" data-target="#modal-user-info">
+		{% if follow %}
+			{% for f in follow %}
+				<div class="followee-list" data-userid="{{f.followee.email}}" data-toggle="modal" data-target="#modal-user-info">
 				{{f.followee.email}}
 			</div>
-		{% endfor %}
+			{% endfor %}
+		{% else %}
+			<div class="no-follow-wrap">
+				<i class="material-icons">&#xE7FC;</i>
+				<p>You don't have any following yet! </p>
+			</div>
+		{% endif %}
 	{% elif type == "follower" %}
-		{% for f in follow %}
-			<div class="follower-list" data-userid="{{f.follower.email}}" data-toggle="modal" data-target="#modal-user-info">
+		{% if follow %}
+			{% for f in follow %}
+				<div class="follower-list" data-userid="{{f.follower.email}}" data-toggle="modal" data-target="#modal-user-info">
 				{{f.follower.email}}
 			</div>
-		{% endfor %}
+			{% endfor %}
+		{% else %}
+			<div class="no-follow-wrap">
+				<i class="material-icons">&#xE7FC;</i>
+				<p>You don't have any follower yet! </p>
+			</div>
+		{% endif %}
 	{% endif %}
 </div>

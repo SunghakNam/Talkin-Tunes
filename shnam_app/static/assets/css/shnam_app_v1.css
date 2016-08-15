@@ -36,12 +36,13 @@ body{
 @media (min-width: 768px){
     .modal-dialog{
         width:500px !important;
-        margin:30px auto;
+        /*margin:30px auto;*/
     }
 }
 .modal-dialog{
     margin-left:auto;
     margin-right:auto;
+    margin-top:0;
 }
 .mainback{
     margin-right:auto !important;
@@ -59,7 +60,7 @@ body{
     color:#000000;
 }
 .font-weight{
-    font-weight:bold;
+    font-weight:bold;    
 }
 .main-container{
 	height:100%;
@@ -209,4 +210,36 @@ tr.music-list{
 }
 input[type="search"]{
     font-size:16px;
+}
+
+/*feedpage*/
+.feed-list-container{
+    margin-top:25px;
+}
+.feed-list-container .feed-title{
+    padding-left:1em;
+    font-size:18px;
+    margin-bottom:10px;
+}
+.feed-title .feed-user-email{
+    font-weight: 500;
+    text-decoration: underline;
+}
+/*mypage*/
+.mypage-container .email{
+    font-size: 20px;
+    text-decoration: underline;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mypage-container .user-profile.follow-info{
+    height:50px;
+    font-size: 16px;
+}
+.no-follow-wrap{
+    text-align:center;
+    margin-top:30px
+}
+.no-follow-wrap > i {
+    font-size:70px;
 }

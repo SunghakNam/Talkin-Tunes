@@ -1,10 +1,17 @@
 <div class="friends-list-container">
-	{% for fol in follows %}
-		<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}">
-			<span>{{fol.followee.email}}</span>
-			<span class="music-send-icon" style="float:right;"><i class="material-icons" style="vertical-align:bottom;">&#xE163;</i></span>
+	{% if follows %}
+		{% for fol in follows %}
+			<div class="friends-list" data-uri="{{uri}}" data-userid="{{fol.followee.userIdx}}">
+				<span>{{fol.followee.email}}</span>
+				<span class="music-send-icon" style="float:right;"><i class="material-icons" style="vertical-align:bottom;">&#xE163;</i></span>
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="no-follow-wrap" style="color:#000000;">
+			<i class="material-icons">&#xE7FC;</i>
+			<p style="font-size:20px;">You don't have any follower yet! </p>
 		</div>
-	{% endfor %}
+	{% endif %}
 </div>
 
 <script>
@@ -17,8 +24,8 @@
 			data: {"uri": uri, "receiver": receiver, csrfmiddlewaretoken: '{{ csrf_token }}'},
 			sucess:function(){
 
-			},error: function(){
-
+			},error: function(xhr, errmsg, err){
+				error_report("send_music", xhr.status, xhr.responseText, errmsg)
 			}
 
 		});
