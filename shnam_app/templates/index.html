@@ -166,7 +166,7 @@
 			type: 'POST',
 			data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
 			success:function(data){
-				//console.log()
+				console.log(data);
 				if (data.result == false){
 					// PAGE="login";
 					login_page();

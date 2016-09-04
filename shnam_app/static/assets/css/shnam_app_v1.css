@@ -223,6 +223,7 @@ input[type="search"]{
 }
 /*feedpage*/
 .feed-list-container{
+    height:95%;
     margin-top:25px;
 }
 .feed-list-container .feed-title{

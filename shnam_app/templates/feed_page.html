@@ -15,7 +15,7 @@
 			{% elif f|data_type == 'msg' %}
 				<div class="feed-wrap">		
 					<div class="feed-title font-color">
-						<span class="feed-user-email" data-userid="{{f.followObj.follower.email}}" data-toggle="modal" data-target="#modal-user-info">{{f.followObj.follower.email}}</span> sent you a music</div>
+						<span class="feed-user-email" data-userid="{{f.followObj.follower.email}}">{{f.followObj.follower.email}}</span> sent you a music</div>
 					<div class="feed-contents">
 						<div class="swiper-lazy-preloader swiper-feed"></div>
 						<iframe class="spotify-frame" data-idx="{{forloop.counter}}" src="https://embed.spotify.com/?uri={{f.uri}}" width="{{width}}"height="80" allowtransparency="false" frameborder="0"></iframe>
@@ -32,6 +32,9 @@
 	{% endif %}
 </div>
 <script>
+	$('.feed-user-email').on('click',function(){
+		$('#modal-user-info').show();
+	});
 	$('.spotify-frame').load(function(){
 		$(this).prev().hide();
 	});

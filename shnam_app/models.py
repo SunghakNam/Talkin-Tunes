@@ -14,7 +14,7 @@ class User(models.Model):
 	userIdx = models.AutoField(primary_key=True, db_index=True)
 	email = models.CharField(unique=True, max_length=50, blank=True, null=True)
 	password = models.CharField(max_length=100)
-	userId = models.CharField(unique=True, max_length=100, blank=True)
+	userId = models.CharField(max_length=100, blank=True)
 	device = models.CharField(max_length=50, blank=True, null=True)
 	loginToken = models.TextField(default="", blank=True)
 	createdTime = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,4 @@
-<div class="mypage-container" style="height:100%">
+<div class="mypage-container" style="height:96%">
 	<div class="user-profile" style="padding: 0 1em 0 1em;">
 		<div class="user-profile email font-color font-weight" data-userid="{{user.id}}" {% if logout_enable %} onclick="logout()" {% endif %}>
 			{{user.email}}
@@ -37,7 +37,7 @@
 			</div>
 			{% endfor %}
 		{% else %}
-			<div class="no-playlist-icon" style="text-align:center;height:300px;margin-top:100px">
+			<div class="no-playlist-icon" style="text-align:center;height:200px;margin-top:100px">
 				<i class="material-icons">&#xE405;</i><br>
 				<span>You do not have any play list ! Find music and add one!</span>
 			</div>

@@ -55,6 +55,8 @@
 				if(data['result'] = "True"){
 					window.location.href = '/';
 					$('#banner_header').show();
+				}else{
+					native_alert("", "incorrect login information");
 				}
 					
 			},
